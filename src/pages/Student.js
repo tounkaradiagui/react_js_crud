@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../components/Loading';
 
 function Student() {
 
-    const [etudiants, setStudents] = useState([]);
-
+    const [loading, setLoading] = useState([true]);
+    const [students, setStudents] = useState([]);
+    
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/etudiant`).then(res => {
-            console.log(res)
-            setStudents(res.data.etudiants);
+        axios.get(`http://127.0.0.1:8000/api/students`).then(res => {
+            // console.log(res)
+            setStudents(res.data.students);
+            setLoading(false);
         });
     }, [])
 
+    if (loading) {
+        return (
+            <div className='mt-3'>
+                <Loading/>
+                <span>Chargement, Veuillez Patienter...</span>
+            </div>
+        )
+    }
+
     var studentDetails = "";
 
-    studentDetails = etudiants.map( (item, index) => {
+    studentDetails = students.map((item, index) => {
         return (
             <tr key={index}>
                 <td>{item.id}</td>
@@ -25,10 +37,10 @@ function Student() {
                 <td>{item.email}</td>
                 <td>{item.telephone}</td>
                 <td>
-                    <Link to="/" className="btn btn-primary btn-sm">Mdifier</Link>
+                    <Link to="/" className="btn btn-primary btn-sm">Edit</Link>
                 </td>
                 <td>
-                    <button type="button" className="btn btn-danger btn-sm">Supprimer</button>
+                    <button type="button" className="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
         )
@@ -42,12 +54,12 @@ function Student() {
                         
                         <div className="card-header mt-4">
                             <h3>liste des étudiants
-                                <Link to="/createStudent" className='btn btn-primary float-end'>Ajouter</Link>
+                                <Link to="/createStudent" className='btn btn-primary btn-sm float-end'>Ajouter</Link>
                             </h3>
                         </div>
 
                         <div className="card-body">
-                            <table className="table table-boderded table-stripped">
+                            <table className="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -56,6 +68,7 @@ function Student() {
                                         <th>Cours</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th colSpan={2}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
