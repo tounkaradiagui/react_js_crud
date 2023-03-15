@@ -34,7 +34,7 @@ function Student() {
                 <td>{item.nom}</td>
                 <td>{item.prenom}</td>
                 <td>{item.cours}</td>
-                <td>{item.email}</td>
+                <td>{item.email}</td> 
                 <td>{item.telephone}</td>
                 <td>
                     <Link to="/" className="btn btn-primary btn-sm">Edit</Link>
@@ -52,9 +52,9 @@ function Student() {
                 <div className="col-md-12">
                     <div className="card mt-4">
                         
-                        <div className="card-header mt-4">
+                        <div className="card-header">
                             <h3>liste des étudiants
-                                <Link to="/createStudent" className='btn btn-primary btn-sm float-end'>Ajouter</Link>
+                                <Link to="/students/create" className='btn btn-primary btn-sm float-end'>Ajouter</Link>
                             </h3>
                         </div>
 
